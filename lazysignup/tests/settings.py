@@ -1,43 +1,13 @@
 import os
 
-DB_CONFIGS = {
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'lazysignup',
-    },
-    'postgres': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'USER': 'postgres',
-        'NAME': 'lazysignup',
-    },
-    'local-postgres': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lazysignup',
-        'USER': 'lazysignup',
-        'PASSWORD': 'lazysignup',
-        'HOST': 'localhost'
-    },
-    'mysql': {
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'travis',
-        'NAME': 'lazysignup',
-    },
-    'local-mysql': {
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'lazysignup',
-        'NAME': 'lazysignup',
-        'PASSWORD': 'lazysignup',
-    }
-}
-
-test_db = os.environ.get('DB', 'sqlite')
-try:
-    db_config = DB_CONFIGS[test_db]
-except KeyError:
-    raise RuntimeError('Unsupported test DB {0}'.format(test_db))
+# Database
+# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': db_config
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
 }
 
 INSTALLED_APPS = (
@@ -90,7 +60,6 @@ LAZYSIGNUP_USER_AGENT_BLACKLIST = [
 LAZYSIGNUP_USER_MODEL = 'auth.User'
 AUTH_USER_MODEL = 'auth.User'
 
-ROOT_URLCONF = 'lazysignup.tests.urls'
 SECRET_KEY = 'non-empty-key'
 DEBUG = True
 

@@ -84,7 +84,7 @@ class LazyUser(models.Model):
 
     @classmethod
     def get_user_class(cls):
-        return cls._meta.get_field('user').rel.to
+        return cls._meta.get_field('user').related_model
 
     def __str__(self):
         return '{0}:{1}'.format(self.user, self.created)

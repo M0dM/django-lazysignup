@@ -12,7 +12,7 @@ def view(request):
 @allow_lazy_user
 def lazy_view(request):
     r = HttpResponse()
-    if request.user.is_anonymous() or request.user.has_usable_password():
+    if request.user.is_anonymous or request.user.has_usable_password():
         r.status_code = 500
     return r
 
