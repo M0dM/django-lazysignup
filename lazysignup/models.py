@@ -53,14 +53,15 @@ class LazyUserManager(models.Manager):
 
         Raises a TypeError if the user is not lazy.
         """
-        if not is_lazy_user(form.instance):
-            raise NotLazyError('You cannot convert a non-lazy user')
-
         user = form.save()
 
         # We need to remove the LazyUser instance assocated with the
         # newly-converted user
-        self.filter(user=user).delete()
+        try:
+            self.filter(user=user).delete()
+        except:  # NOQA
+            pass  # Do nothing if no lazy user existed
+
         converted.send(self, user=user)
         return user
 
@@ -73,7 +74,7 @@ class LazyUserManager(models.Manager):
         else:
             max_length = user_class._meta.get_field(
                 self.username_field).max_length
-            return uuid.uuid4().hex[:max_length]
+            return uuid.uuid4().hex[:150]
 
 
 @six.python_2_unicode_compatible
