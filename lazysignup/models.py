@@ -73,7 +73,8 @@ class LazyUserManager(models.Manager):
             return m()
         else:
             max_length = user_class._meta.get_field(
-                self.username_field).max_length
+                self.username_field
+            ).max_length
             return uuid.uuid4().hex[:150]
 
 
